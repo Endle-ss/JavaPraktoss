@@ -1,26 +1,54 @@
 import java.util.Scanner;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Ну здарова!");
+
+        System.out.println("Ну здарова");
+
         System.out.print("Введите вашу фамилию: ");
         String lastName = scanner.nextLine();
+
         System.out.print("Введите ваше имя: ");
         String firstName = scanner.nextLine();
+
         System.out.print("Введите ваше отчество: ");
         String middleName = scanner.nextLine();
-        System.out.print("Введите ваш возраст: ");
-        int age = scanner.nextInt();
-        if (age < 18) {
+
+        System.out.print("Введите вашу дату рождения в формате (dd.MM.yyyy): ");
+        String dobString = scanner.nextLine();
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
+        Date dob = null;
+
+        try {
+            dob = dateFormat.parse(dobString);
+        } catch (ParseException e) {
             System.out.println("Ты лох");
+            return;
+        }
+
+        int age = calculateAge(dob);
+
+        if (age < 18) {
+            System.out.println("Вы несовершеннолетний!");
         } else {
+            // Теперь можно использовать age в качестве возраста в годах
+            System.out.println("Ваш возраст: " + age + " лет.");
+
+            // Остальная часть кода остается без изменений
             System.out.println("Меню:");
             System.out.println("1. Нахождение P");
             System.out.println("2. Нахождение S");
             System.out.println("3. Нахождение R");
             System.out.println("0. Выход");
+
             System.out.print("Выберите действие: ");
             int choice = scanner.nextInt();
+
             switch (choice) {
                 case 1:
                     double perimeter = calculate("Периметр", "радиус", 2 * Math.PI);
@@ -43,10 +71,17 @@ public class Main {
             }
         }
     }
+
     public static double calculate(String figure, String inputLabel, double multiplier) {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Введите " + inputLabel + " " + figure.toLowerCase() + "а: ");
         double value = scanner.nextDouble();
         return value * multiplier;
+    }
+
+    public static int calculateAge(Date dob) {
+        Date currentDate = new Date();
+        long ageInMillis = currentDate.getTime() - dob.getTime();
+        return (int) (ageInMillis / 31557600000L); // приблизительное количество миллисекунд в году
     }
 }
