@@ -2,7 +2,7 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Добро пожаловать!");
+        System.out.println("Ну здарова!");
         System.out.print("Введите вашу фамилию: ");
         String lastName = scanner.nextLine();
         System.out.print("Введите ваше имя: ");
@@ -12,7 +12,7 @@ public class Main {
         System.out.print("Введите ваш возраст: ");
         int age = scanner.nextInt();
         if (age < 18) {
-            System.out.println("Вы несовершеннолетний!");
+            System.out.println("Ты лох");
         } else {
             System.out.println("Меню:");
             System.out.println("1. Нахождение P");
